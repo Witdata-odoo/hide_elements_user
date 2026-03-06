@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hide_elements_rule_form" model="ir.ui.view">
+        <field name="name">hide.elements.rule.form</field>
+        <field name="model">hide.elements.rule</field>
+        <field name="arch" type="xml">
+            <form string="Reglas de Elementos">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Salespeople cannot confirm invoices"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="model_id" options="{'no_create': True}"/>
+                            <field name="restriction_type"/>
+                            <field name="element_name" invisible="restriction_type != 'hide_button'" required="restriction_type == 'hide_button'"/>
+                            <field name="condition" invisible="restriction_type != 'hide_button'"/>
+                        </group>
+                        <group>
+                            <field name="user_ids" widget="many2many_tags"/>
+                            <field name="company_ids" widget="many2many_tags" groups="base.group_multi_company" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hide_elements_rule_tree" model="ir.ui.view">
+        <field name="name">hide.elements.rule.tree</field>
+        <field name="model">hide.elements.rule</field>
+        <field name="arch" type="xml">
+            <list string="Element Rules">
+                <field name="name"/>
+                <field name="model_id"/>
+                <field name="restriction_type"/>
+                <field name="user_ids" widget="many2many_tags"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_hide_elements_rule" model="ir.actions.act_window">
+        <field name="name">Ocultar Botones/Reglas</field>
+        <field name="res_model">hide.elements.rule</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_hide_elements_rule" 
+              name="Hide Buttons and Actions" 
+              parent="base.menu_users" 
+              action="action_hide_elements_rule" 
+              sequence="3"/>
+</odoo>
